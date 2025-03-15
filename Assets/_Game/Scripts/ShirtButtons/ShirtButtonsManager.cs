@@ -23,6 +23,7 @@ namespace _Game
             for ( int i = 0; i < buttonCount; i++ ) {
                 Vector3 spawnPosition = transform.position + (Quaternion.Euler(90, 0, 0)*( Random.insideUnitCircle * maxDistance ));
                 var newButton = Instantiate( shirtButtonPrefab, spawnPosition, transform.rotation, transform );
+                newButton.Initalize( color );
                 _buttons.Add( newButton );
             }
         }

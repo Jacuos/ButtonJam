@@ -20,6 +20,7 @@ namespace _Game
         {
             Vector3 spawnPosition = transform.position + ( queueOffset * _shirts.Count );
             var newShirt = Instantiate( shirtPrefab,spawnPosition, transform.rotation, transform );
+            newShirt.Initalize( color, slotCount );
             _shirts.Add( newShirt );
         }
     }

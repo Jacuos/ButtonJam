@@ -155,3 +155,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   color: {fileID: 0}
   slotCount: 0
+  mesh: {fileID: 6616279801852697599}

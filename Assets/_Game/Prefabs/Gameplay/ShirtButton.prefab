@@ -156,6 +156,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   colorConfig: {fileID: 0}
+  mesh: {fileID: 4299244177219487556}
 --- !u!54 &3238620754961931662
 Rigidbody:
   m_ObjectHideFlags: 0
