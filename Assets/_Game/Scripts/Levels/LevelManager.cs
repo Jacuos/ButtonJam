@@ -2,6 +2,7 @@ using System;
 using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Serialization;
 
 namespace _Game
 {
@@ -14,13 +15,14 @@ namespace _Game
         public int gameplayScene;
         [Scene]
         public int mainMenuScene;
-        public LevelsConfig levelsConfig;
+        [FormerlySerializedAs( "levelsConfig" )]
+        public AllLevelsConfig allLevelsConfig;
+        
+        public LevelConfig CurrentLevelConfig
+        {get;private set;}
 
         public float LevelStartTimestamp
-        {
-            get;
-            private set;
-        }
+        {get;private set;}
         
         void OnEnable()
         {
@@ -42,6 +44,7 @@ namespace _Game
         async Awaitable LoadLevel()
         {
             SceneManager.UnloadSceneAsync( SceneManager.GetActiveScene());
+            CurrentLevelConfig = allLevelsConfig.levels[0];
             await SceneManager.LoadSceneAsync( gameplayScene , LoadSceneMode.Additive);
             SceneManager.SetActiveScene( SceneManager.GetSceneByBuildIndex( gameplayScene ) );
             NewLevelLoaded?.Invoke();

@@ -1,4 +1,5 @@
 using System;
+using UnityEngine.Serialization;
 
 namespace _Game
 {
@@ -6,7 +7,8 @@ namespace _Game
     {
         public static Action<int> PointsChanged;
         
-        public LevelsConfig levelsConfig;
+        [FormerlySerializedAs( "levelsConfig" )]
+        public AllLevelsConfig allLevelsConfig;
 
         public int Points
         {
@@ -41,8 +43,8 @@ namespace _Game
         {
             Points += count;
             PointsChanged?.Invoke( Points );
-            if(Points >= levelsConfig.minPointsToWin)
-                GameStateManager.Instance.SetGameState( GameState.GameOver );
+            //if(Points >= allLevelsConfig.minPointsToWin)
+            //    GameStateManager.Instance.SetGameState( GameState.GameOver );
         }
     }
 }
