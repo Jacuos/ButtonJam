@@ -21,7 +21,7 @@ namespace _Game
         public void SpawnButtons(ColorConfig color, int buttonCount)
         {
             for ( int i = 0; i < buttonCount; i++ ) {
-                Vector3 spawnPosition = transform.position + (Vector3) ( Random.insideUnitCircle * maxDistance );
+                Vector3 spawnPosition = transform.position + (Quaternion.Euler(90, 0, 0)*( Random.insideUnitCircle * maxDistance ));
                 var newButton = Instantiate( shirtButtonPrefab, spawnPosition, transform.rotation, transform );
                 _buttons.Add( newButton );
             }
