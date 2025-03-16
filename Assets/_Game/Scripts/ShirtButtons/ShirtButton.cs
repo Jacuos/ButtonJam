@@ -13,6 +13,8 @@ namespace _Game
         public GameObject outline;
         
         private bool _isActive;
+        private Rigidbody _rigidbody;
+        private Collider _collider;
         public bool IsActive
         {
             get
@@ -43,10 +45,21 @@ namespace _Game
 
         public bool IsFinished;
 
+        void Awake()
+        {
+            _rigidbody = GetComponent<Rigidbody>();
+            _collider = GetComponentInChildren<Collider>();
+        }
+
         public void Initalize(ColorConfig newColor)
         {
             colorConfig = newColor;
             mesh.material.color = newColor.color;
+            IsFinished = false;
+            _rigidbody.isKinematic = false;
+            _rigidbody.linearVelocity = Vector3.zero;
+            _rigidbody.angularVelocity = Vector3.zero;
+            _collider.enabled = true;
         }
 
         private void OnMouseDown()

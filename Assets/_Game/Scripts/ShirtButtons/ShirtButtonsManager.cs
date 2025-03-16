@@ -1,6 +1,8 @@
+using System;
 using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace _Game
 {
@@ -18,6 +20,7 @@ namespace _Game
         private void OnEnable()
         {
             ShirtButton.ButtonActivated += OnButtonActivated;
+            GameStateManager.GameStateChanged += OnGameStateChanged;
         }
 
         private void OnButtonActivated( ShirtButton button, bool activated)
@@ -77,7 +80,7 @@ namespace _Game
         public void DestroyAllButtons()
         {
             for(int i=_buttons.Count-1;i>=0;i--)
-                Destroy( _buttons[i] );
+                ObjectPoolManager.Instance.Despawn( _buttons[i].gameObject );
             _buttons.Clear();
         }
         
@@ -85,7 +88,8 @@ namespace _Game
         {
             for ( int i = 0; i < buttonCount; i++ ) {
                 Vector3 spawnPosition = transform.position + (Quaternion.Euler(90, 0, 0)*( Random.insideUnitCircle * maxDistance ));
-                var newButton = Instantiate( shirtButtonPrefab, spawnPosition, transform.rotation, transform );
+                var newObj = ObjectPoolManager.Instance.Spawn( shirtButtonPrefab.gameObject, spawnPosition, transform.rotation );
+                var newButton = newObj.GetComponent<ShirtButton>();
                 newButton.Initalize( color );
                 _buttons.Add( newButton );
             }
@@ -106,6 +110,12 @@ namespace _Game
                 SlotManager.Instance.PutButtonOnSlot( _activeButtons[i] );
             }
         }
+        
+        private void OnGameStateChanged( GameState current)
+        {
+            if(current == GameState.GameOver)
+                DestroyAllButtons();
+        }
 
         public void DeactivateAllButtons()
         {
@@ -116,6 +126,7 @@ namespace _Game
         private void OnDisable()
         {
             ShirtButton.ButtonActivated -= OnButtonActivated;
+            GameStateManager.GameStateChanged -= OnGameStateChanged;
         }
     }
 }
