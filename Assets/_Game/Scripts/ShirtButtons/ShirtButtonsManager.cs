@@ -37,6 +37,10 @@ namespace _Game
         public void TryFinishShirt(bool useButtonsInSlots=false)
         {
             var currentShirt = ShirtsManager.Instance.GetCurrentShirt();
+            if ( currentShirt.slotCount <= 0 ) {
+                FinishShirt( );
+                return;
+            }
             if(currentShirt.color != _activeColor)
                 return;
             var buttonList = _activeButtons;
@@ -44,7 +48,7 @@ namespace _Game
                 buttonList = SlotManager.Instance.GetButtonsFromSlots( _activeColor );
                 buttonList.AddRange( _activeButtons );
             }
-            if(buttonList.Count < currentShirt.slotCount)
+            if( buttonList.Count < currentShirt.slotCount)
                 return;
             for ( int i = 0; i < currentShirt.slotCount; i++ ) {
                 var currentButton = buttonList[i];
@@ -52,12 +56,17 @@ namespace _Game
                 currentButton.IsFinished = true;
                 currentButton.GetComponent<Rigidbody>().isKinematic = true;
                 currentButton.GetComponentInChildren<Collider>().enabled = false;
+                currentButton.transform.SetParent( currentShirt.buttonsSlots[i].transform, true );
                 currentButton.transform.DORotate( Quaternion.identity.eulerAngles,0.5f );
                 currentButton.transform.DOScale( 0.25f, 0.5f );
-                var i1 = i;
-                currentButton.transform.DOMove( currentShirt.buttonsSlots[i].transform.position+Vector3.up*0.1f,0.5f )
-                    .OnComplete( ()=>currentButton.transform.SetParent(  currentShirt.buttonsSlots[i1].transform,true) );
+                currentButton.transform.DOLocalMove( Vector3.back * 0.1f,
+                    0.5f );
             }
+            FinishShirt();
+        }
+
+        void FinishShirt()
+        {
             DeactivateAllButtons();
             DOVirtual.DelayedCall( 0.6f, () =>
             {
