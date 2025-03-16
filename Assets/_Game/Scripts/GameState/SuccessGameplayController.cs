@@ -7,10 +7,10 @@ namespace _Game
     {
         private void OnEnable()
         {
-            ShirtsManager.ShirtFinished += OnShirtFinished;
+            ShirtsManager.ShirtCountChanged += OnShirtCountChanged;
         }
 
-        private void OnShirtFinished( int remainingShirtsCount )
+        private void OnShirtCountChanged( int remainingShirtsCount )
         {
             if(GameStateManager.Instance.CurrentGameState != GameState.GamePlay)
                 return;
@@ -22,7 +22,7 @@ namespace _Game
 
         private void OnDisable()
         {
-            ShirtsManager.ShirtFinished -= OnShirtFinished;
+            ShirtsManager.ShirtCountChanged -= OnShirtCountChanged;
         }
     }
 }

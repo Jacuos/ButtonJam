@@ -8,7 +8,8 @@ namespace _Game
 {
     public class ShirtsManager : Manager<ShirtsManager>
     {
-        public static Action<int> ShirtFinished;
+        public static Action ShirtFinished;
+        public static Action<int> ShirtCountChanged;
         
         public Shirt shirtPrefab;
         public Vector3 queueOffset;
@@ -23,6 +24,7 @@ namespace _Game
             var newShirt = Instantiate( shirtPrefab,spawnPosition, transform.rotation, transform );
             newShirt.Initalize( color, slotCount );
             _shirts.Add( newShirt );
+            ShirtCountChanged?.Invoke( _shirts.Count );
         }
 
         public Shirt GetCurrentShirt()
@@ -38,7 +40,8 @@ namespace _Game
                 _shirts[i].transform.DOMove( spawnPosition, 0.5f );
             }
             _shirts.RemoveAt( 0 );
-            ShirtFinished?.Invoke( _shirts.Count );
+            ShirtCountChanged?.Invoke( _shirts.Count );
+            ShirtFinished?.Invoke();
         }
         
         public void DestroyAllShirts()
