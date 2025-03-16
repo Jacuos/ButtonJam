@@ -23,6 +23,8 @@ namespace _Game
 
         public float LevelStartTimestamp
         {get;private set;}
+
+        private int _levelNumber;
         
         void OnEnable()
         {
@@ -44,7 +46,9 @@ namespace _Game
         async Awaitable LoadLevel()
         {
             SceneManager.UnloadSceneAsync( SceneManager.GetActiveScene());
-            CurrentLevelConfig = allLevelsConfig.levels[0];
+            if ( GameStateManager.Instance.CurrentGameResult == GameResult.Success )
+                _levelNumber++;
+            CurrentLevelConfig = allLevelsConfig.levels[_levelNumber % allLevelsConfig.levels.Length];
             await SceneManager.LoadSceneAsync( gameplayScene , LoadSceneMode.Additive);
             SceneManager.SetActiveScene( SceneManager.GetSceneByBuildIndex( gameplayScene ) );
             NewLevelLoaded?.Invoke();
