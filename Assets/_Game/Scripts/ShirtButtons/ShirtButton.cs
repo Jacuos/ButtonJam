@@ -41,6 +41,8 @@ namespace _Game
             }
         }
 
+        public bool IsFinished;
+
         public void Initalize(ColorConfig newColor)
         {
             colorConfig = newColor;
@@ -49,6 +51,8 @@ namespace _Game
 
         private void OnMouseDown()
         {
+            if(IsFinished)
+                return;
             if ( _slot != null ) {
                 ShirtButtonsManager.Instance.TryFinishShirt( true );
                 return;

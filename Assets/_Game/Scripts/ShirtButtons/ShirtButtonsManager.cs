@@ -47,15 +47,16 @@ namespace _Game
             if(buttonList.Count < currentShirt.slotCount)
                 return;
             for ( int i = 0; i < currentShirt.slotCount; i++ ) {
-                var activeButton = buttonList[i];
-                SlotManager.Instance.RemoveButtonFromSlot( activeButton );
-                activeButton.GetComponent<Rigidbody>().isKinematic = true;
-                activeButton.GetComponentInChildren<Collider>().enabled = false;
-                activeButton.transform.DORotate( Quaternion.identity.eulerAngles,0.5f );
-                activeButton.transform.DOScale( 0.25f, 0.5f );
+                var currentButton = buttonList[i];
+                SlotManager.Instance.RemoveButtonFromSlot( currentButton );
+                currentButton.IsFinished = true;
+                currentButton.GetComponent<Rigidbody>().isKinematic = true;
+                currentButton.GetComponentInChildren<Collider>().enabled = false;
+                currentButton.transform.DORotate( Quaternion.identity.eulerAngles,0.5f );
+                currentButton.transform.DOScale( 0.25f, 0.5f );
                 var i1 = i;
-                activeButton.transform.DOMove( currentShirt.buttonsSlots[i].transform.position+Vector3.up*0.1f,0.5f )
-                    .OnComplete( ()=>activeButton.transform.SetParent(  currentShirt.buttonsSlots[i1].transform,true) );
+                currentButton.transform.DOMove( currentShirt.buttonsSlots[i].transform.position+Vector3.up*0.1f,0.5f )
+                    .OnComplete( ()=>currentButton.transform.SetParent(  currentShirt.buttonsSlots[i1].transform,true) );
             }
             DeactivateAllButtons();
             DOVirtual.DelayedCall( 0.6f, () =>
@@ -83,6 +84,11 @@ namespace _Game
         public ColorConfig GetActiveColor()
         {
             return _activeColor;
+        }
+
+        public List<ShirtButton> GetAllButtons()
+        {
+            return _buttons;
         }
 
         public void TryPutButtonsInSlots()

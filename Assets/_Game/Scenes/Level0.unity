@@ -1236,6 +1236,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1498684863}
   - component: {fileID: 1498684864}
+  - component: {fileID: 1498684865}
   m_Layer: 0
   m_Name: ShirtButtonsManager
   m_TagString: Untagged
@@ -1273,6 +1274,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shirtButtonPrefab: {fileID: 1902307160561507444, guid: 7f5d8481df7794681a425e15465a45ed, type: 3}
   maxDistance: 3.5
+--- !u!114 &1498684865
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1498684862}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecd1d203c1d40dcae07ba4f0aac0d7b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hintWaitTime: 10
 --- !u!1 &1572194607
 GameObject:
   m_ObjectHideFlags: 0
