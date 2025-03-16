@@ -6,6 +6,7 @@ namespace _Game
     public class ShirtButton : MonoBehaviour
     {
         public static Action<ShirtButton, bool> ButtonActivated;
+        public static Action<ShirtButton, Slot> ButtonPlacedInSlot;
         
         public ColorConfig colorConfig;
         public MeshRenderer mesh;
@@ -26,6 +27,20 @@ namespace _Game
             }
         }
 
+        private Slot _slot;
+        public Slot OccupiedSlot
+        {
+            get
+            {
+                return _slot;
+            }
+            set
+            {
+                _slot = value;
+                ButtonPlacedInSlot?.Invoke( this, _slot );
+            }
+        }
+
         public void Initalize(ColorConfig newColor)
         {
             colorConfig = newColor;
@@ -34,6 +49,10 @@ namespace _Game
 
         private void OnMouseDown()
         {
+            if ( _slot != null ) {
+                ShirtButtonsManager.Instance.TryFinishShirt( true );
+                return;
+            }
             var activeColor = ShirtButtonsManager.Instance.GetActiveColor();
             if(activeColor == null || activeColor == colorConfig)
                 IsActive = !IsActive;

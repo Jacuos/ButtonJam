@@ -34,16 +34,24 @@ namespace _Game
             }
         }
 
-        void TryFinishShirt()
+        public void TryFinishShirt(bool useButtonsInSlots=false)
         {
             var currentShirt = ShirtsManager.Instance.GetCurrentShirt();
             if(currentShirt.color != _activeColor)
                 return;
-            if(_activeButtons.Count < currentShirt.slotCount)
+            var buttonList = _activeButtons;
+            if ( useButtonsInSlots ) {
+                buttonList = SlotManager.Instance.GetButtonsFromSlots( _activeColor );
+                buttonList.AddRange( _activeButtons );
+            }
+            if(buttonList.Count < currentShirt.slotCount)
                 return;
             for ( int i = 0; i < currentShirt.slotCount; i++ ) {
-                var activeButton = _activeButtons[i];
+                var activeButton = buttonList[i];
+                SlotManager.Instance.RemoveButtonFromSlot( activeButton );
                 activeButton.GetComponent<Rigidbody>().isKinematic = true;
+                activeButton.GetComponentInChildren<Collider>().enabled = false;
+                activeButton.transform.DORotate( Quaternion.identity.eulerAngles,0.5f );
                 activeButton.transform.DOScale( 0.25f, 0.5f );
                 var i1 = i;
                 activeButton.transform.DOMove( currentShirt.buttonsSlots[i].transform.position+Vector3.up*0.1f,0.5f )
@@ -75,6 +83,13 @@ namespace _Game
         public ColorConfig GetActiveColor()
         {
             return _activeColor;
+        }
+
+        public void TryPutButtonsInSlots()
+        {
+            for ( int i = _activeButtons.Count - 1; i >= 0; i-- ) {
+                SlotManager.Instance.PutButtonOnSlot( _activeButtons[i] );
+            }
         }
 
         public void DeactivateAllButtons()

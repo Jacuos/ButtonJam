@@ -7,6 +7,7 @@ namespace _Game
         
         void OnMouseDown()
         {
+            ShirtButtonsManager.Instance.TryPutButtonsInSlots();
             ShirtButtonsManager.Instance.DeactivateAllButtons();
         }
     }
