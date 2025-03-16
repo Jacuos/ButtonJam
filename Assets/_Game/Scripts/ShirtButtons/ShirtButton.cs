@@ -67,7 +67,7 @@ namespace _Game
             if(IsFinished)
                 return;
             if ( _slot != null ) {
-                ShirtButtonsManager.Instance.TryFinishShirt( true );
+                ShirtButtonsManager.Instance.TryFinishShirt( true, colorConfig );
                 return;
             }
             var activeColor = ShirtButtonsManager.Instance.GetActiveColor();

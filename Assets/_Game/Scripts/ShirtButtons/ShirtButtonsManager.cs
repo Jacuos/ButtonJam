@@ -37,18 +37,19 @@ namespace _Game
             }
         }
 
-        public void TryFinishShirt(bool useButtonsInSlots=false)
+        public void TryFinishShirt(bool useButtonsInSlots=false, ColorConfig forcedColor = null)
         {
             var currentShirt = ShirtsManager.Instance.GetCurrentShirt();
             if ( currentShirt.slotCount <= 0 ) {
                 FinishShirt( );
                 return;
             }
-            if(currentShirt.color != _activeColor)
+            var myColor = forcedColor != null ? forcedColor : _activeColor;
+            if(currentShirt.color != myColor)
                 return;
             var buttonList = _activeButtons;
             if ( useButtonsInSlots ) {
-                buttonList = SlotManager.Instance.GetButtonsFromSlots( _activeColor );
+                buttonList = SlotManager.Instance.GetButtonsFromSlots( myColor);
                 buttonList.AddRange( _activeButtons );
             }
             if( buttonList.Count < currentShirt.slotCount)
