@@ -13,7 +13,7 @@ namespace _Game
         private List<ShirtButtonHintView> _hintedButtons = new List<ShirtButtonHintView>();
         void Start()
         {
-            
+            _lastActionTimestamp = Time.time;
         }
 
         private void Update()

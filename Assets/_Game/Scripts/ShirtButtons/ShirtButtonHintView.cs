@@ -1,3 +1,4 @@
+using System;
 using DG.Tweening;
 using UnityEngine;
 
@@ -6,6 +7,13 @@ namespace _Game
     public class ShirtButtonHintView : MonoBehaviour
     {
         public GameObject view;
+
+        private void OnEnable()
+        {
+            view.SetActive( false );
+            view.transform.DOKill();
+            view.transform.localScale = Vector3.one;
+        }
 
         public void ShowHideHint( bool show )
         {
