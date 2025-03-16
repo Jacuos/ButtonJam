@@ -19,11 +19,9 @@ namespace _Game
         private void Update()
         {
             if ( GameStateManager.Instance.CurrentGameState != GameState.GamePlay ) {
-                _levelStartTimestamp = -1;
+                _levelStartTimestamp = Time.time;
                 return;
             }
-            if(_levelStartTimestamp <0)
-                return;
             float timeSinceStart = Time.time - _levelStartTimestamp;
             if ( timeSinceStart > LevelManager.Instance.CurrentLevelConfig.failureTime )
                 FailLevel();

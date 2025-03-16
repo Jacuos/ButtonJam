@@ -51,8 +51,8 @@ namespace _Game
             CurrentLevelConfig = allLevelsConfig.levels[_levelNumber % allLevelsConfig.levels.Length];
             await SceneManager.LoadSceneAsync( gameplayScene , LoadSceneMode.Additive);
             SceneManager.SetActiveScene( SceneManager.GetSceneByBuildIndex( gameplayScene ) );
-            NewLevelLoaded?.Invoke();
             LevelStartTimestamp = Time.time;
+            NewLevelLoaded?.Invoke();
         }
         async Awaitable LoadMenu()
         {
